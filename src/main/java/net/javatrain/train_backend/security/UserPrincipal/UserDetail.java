@@ -14,6 +14,7 @@ public class UserDetail implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
 
+    //Phương thức này được gọi khi Spring Security cần xác thực, tìm kiếm user bằng username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Tìm người dùng từ cơ sở dữ liệu dựa trên username

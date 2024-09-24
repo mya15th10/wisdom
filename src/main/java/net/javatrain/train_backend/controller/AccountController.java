@@ -4,6 +4,7 @@ import net.javatrain.train_backend.entity.Account;
 import net.javatrain.train_backend.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,14 +38,16 @@ public class AccountController {
         return ResponseEntity.ok("Tài khoản đã được tạo thành công!");
     }
 
-    // Lấy danh sách tất cả các tài khoản
+    // Lấy danh sách tất cả các tài khoản (Chỉ ADMIN và MANAGER)
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping("/all")
     public ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
         return ResponseEntity.ok(accounts);
     }
 
-    // Xóa tài khoản theo ID
+    // Xóa tài khoản theo ID(ADMIN)
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccount(@PathVariable int id) {
         Optional<Account> account = accountRepository.findById(id);
@@ -55,7 +58,8 @@ public class AccountController {
         return ResponseEntity.ok("Tài khoản đã được xóa!");
     }
 
-    // Cập nhật tài khoản
+    // Cập nhật tài khoản (ADMIN, MANAGER)
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAccount(@PathVariable int id, @RequestBody Account updatedAccount) {
         Optional<Account> account = accountRepository.findById(id);

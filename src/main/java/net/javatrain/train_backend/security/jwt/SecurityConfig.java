@@ -26,7 +26,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Cấu hình vô hiệu hóa CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register").permitAll() // Cho phép truy cập không cần đăng nhập
+                        .requestMatchers("/api/auth/login", "/api/account/register").permitAll() // Cho phép truy cập không cần đăng nhập
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Chỉ cho ADMIN truy cập
                         .anyRequest().authenticated()) // Các yêu cầu khác cần đăng nhập
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Không tạo session

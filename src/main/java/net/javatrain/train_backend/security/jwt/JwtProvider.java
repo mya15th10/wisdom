@@ -14,9 +14,11 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
+    //Khóa bí mật ký và xác thực JWT để token không bị thay đổi.
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    //Thời gian tồn tại của token
     @Value("${jwt.expiration}")
     private int jwtExpiration;
 
